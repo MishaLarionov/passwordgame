@@ -3,12 +3,12 @@ import time, random, os, sys
 def importantText(n):
     return("Enter terminal password now (" + str(n) + "/4 attempts left):")
 
-def repetitiveOutput():
-    output("Extracted possible passwords:\n" + wordchoicetext + "\n" + importantText(attempts))
+def repetitiveOutput(at):
+    output("Extracted possible passwords:\n" + wordchoicetext + "\n" + importantText(at))
 
-def repetitiveOutput2(ui, pwd):
+def repetitiveOutput2(ui, pwd, at):
     cls()
-    print("Extracted possible passwords:\n" + wordchoicetext + "\n" + importantText(attempts))
+    print("Extracted possible passwords:\n" + wordchoicetext + "\n" + importantText(at))
     for i in range(0, len(ui)):
         print(ui[i])
         print("Authentication failed. " + checksimilar(ui[i], pwd) + "/" + str(diff) + " correct.")
@@ -63,7 +63,7 @@ passGuessed = False
 wordchoice = repetitivelist(8, wordlist)
 wordchoicetext = ltos(wordchoice).upper()
 password = random.choice(wordchoice).strip()
-repetitiveOutput()
+repetitiveOutput(attemptsleft)
 
 userinput = []
 
@@ -71,13 +71,14 @@ while attemptsleft > 0 and passGuessed == False:
     userinput.append(input().strip().upper())
     userinputText = userinput[attempts].strip().upper()
     if userinputText == password:
-        repetitiveOutput2(userinput[:-1], password)
+        repetitiveOutput2(userinput[:-1], password, attemptsleft)
+        print(userinputText)
         print("Password accepted")
         passGuessed = True
     else:
         print(userinputText + " " + password)
         attemptsleft = attemptsleft - 1
-        repetitiveOutput2(userinput, password)
+        repetitiveOutput2(userinput, password, attemptsleft)
     attempts += 1
 
 if passGuessed == False:    
