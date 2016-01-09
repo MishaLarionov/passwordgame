@@ -71,7 +71,7 @@ while attemptsleft > 0 and passGuessed == False:
     userinput.append(input().strip().upper())
     userinputText = userinput[attempts].strip().upper()
     if userinputText == password:
-        repetitiveOutput2(userinput.pop(), password)
+        repetitiveOutput2(userinput[:-1], password)
         print("Password accepted")
         passGuessed = True
     else:
