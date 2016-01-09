@@ -6,6 +6,13 @@ def importantText(n):
 def repetitiveOutput():
     output("Extracted possible passwords:\n" + wordchoicetext + "\n" + importantText(attempts))
 
+def repetitiveOutput2(ui, pwd):
+    cls()
+    print("Extracted possible passwords:\n" + wordchoicetext + "\n" + importantText(attempts))
+    for i in range(0, len(ui)):
+        print(ui[i])
+        print("Authentication failed. " + checksimilar(ui[i], pwd) + "/" + str(diff) + " correct.")
+
 def checksimilar(ui, pwd):
     sim = 0
     for i in range(0, len(ui)):
@@ -47,7 +54,7 @@ def readfile(n):
 
 input("Press ENTER to run. Do not run from IDLE.")
 
-attemptsleft = 3
+attemptsleft = 4
 attempts = 0
 diff = random.randint(3, 11) 
 wordlist = readfile(diff)
@@ -60,24 +67,22 @@ repetitiveOutput()
 
 userinput = []
 
-print(password)
-
 while attemptsleft > 0 and passGuessed == False:
-    userinput.append(input())
+    userinput.append(input().strip().upper())
     userinputText = userinput[attempts].strip().upper()
-    print(wordchoice)
-    print(userinputText)
     if userinputText == password:
+        print("Correct")
         passGuessed = True
-    elif userinputText in wordchoice:
-        print(checksimilar(userinput, password) + "/" + str(diff) + " correct.")
     else:
-        print("???")
+        print(userinputText + " " + password)
         attemptsleft = attemptsleft - 1
-    attemptsleft = attemptsleft - 1
+        repetitiveOutput2(userinput, password)
     attempts += 1
-    
-input()
+
+if passGuessed == False:    
+    input("Put fancy lockout animation here")
+else:
+    input("Put fancy access granted animation here")
 sys.exit()
 
 
