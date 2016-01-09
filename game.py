@@ -6,6 +6,13 @@ def importantText(n):
 def repetitiveOutput():
     output("Extracted possible passwords:\n" + wordchoicetext + "\n" + importantText(attempts))
 
+def checksimilar(ui, pwd):
+    sim = 0
+    for i in range(0, len(ui)):
+        if ui[i] == pwd[i]:
+            sim += 1
+    return str(sim)
+
 def cls():
     os.system('cls' if os.name == 'nt' else 'clear')
 
@@ -26,7 +33,7 @@ def output(string):
     for i in range(0, len(string)+1):
         cls()
         print(string[:i])
-        time.sleep(0.01)
+        time.sleep(0.005)
 
 def readfile(n):
         l = []
@@ -40,8 +47,10 @@ def readfile(n):
 
 input("Press ENTER to run. Do not run from IDLE.")
 
-attempts = 3
-wordlist = readfile(5)
+attemptsleft = 3
+attempts = 0
+diff = random.randint(3, 11) 
+wordlist = readfile(diff)
 passGuessed = False
 
 wordchoice = repetitivelist(8, wordlist)
@@ -49,15 +58,25 @@ wordchoicetext = ltos(wordchoice).upper()
 password = random.choice(wordchoice).strip()
 repetitiveOutput()
 
-while attempts > 0 and passGuessed == False:
-    userinput = input()
-    userinput = userinput.strip().upper()
-    if userinput == password:
+userinput = []
+
+print(password)
+
+while attemptsleft > 0 and passGuessed == False:
+    userinput.append(input())
+    userinputText = userinput[attempts].strip().upper()
+    print(wordchoice)
+    print(userinputText)
+    if userinputText == password:
         passGuessed = True
+    elif userinputText in wordchoice:
+        print(checksimilar(userinput, password) + "/" + str(diff) + " correct.")
     else:
-        attempts = attempts - 1
-        
-print("ayy lmao")
+        print("???")
+        attemptsleft = attemptsleft - 1
+    attemptsleft = attemptsleft - 1
+    attempts += 1
+    
 input()
 sys.exit()
 
