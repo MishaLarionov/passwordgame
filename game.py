@@ -1,7 +1,7 @@
 import time, random, os, sys
 
 def importantText(n):
-    return("Enter terminal password now (" + str(n) + "/3 attempts left):")
+    return("Enter terminal password now (" + str(n) + "/4 attempts left):")
 
 def repetitiveOutput():
     output("Extracted possible passwords:\n" + wordchoicetext + "\n" + importantText(attempts))
@@ -71,7 +71,8 @@ while attemptsleft > 0 and passGuessed == False:
     userinput.append(input().strip().upper())
     userinputText = userinput[attempts].strip().upper()
     if userinputText == password:
-        print("Correct")
+        repetitiveOutput2(userinput.pop(), password)
+        print("Password accepted")
         passGuessed = True
     else:
         print(userinputText + " " + password)
